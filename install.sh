@@ -313,12 +313,12 @@ PRO_SERVICES() {
     
 }
 
-Config_Variable
-Print_Variable
-Install_Ocserv
-Config_Ocserv
-Config_Firewall
-Config_System
+# Config_Variable
+# Print_Variable
+# Install_Ocserv
+# Config_Ocserv
+# Config_Firewall
+# Config_System
 INSTALL_PANNEL_Env
 PRO_DIR
 PRO_VENV
