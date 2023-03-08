@@ -1,10 +1,11 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-kilxsn6108h8e1yn2%td%oypy#y^hgi7+-bgnurw)rsd*-m_%9'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -92,13 +93,14 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = './static/'
 
-if DEBUG:
-    STATICFILES_DIRS = [
-        Path.joinpath(BASE_DIR, "static")
-    ]
-else:
-    STATIC_ROOT = Path.joinpath(BASE_DIR, "static")
+# if DEBUG:
+#     STATICFILES_DIRS = [
+#         Path.joinpath(BASE_DIR, "static")
+#     ]
+# else:
+#     STATIC_ROOT = Path.joinpath(BASE_DIR, "static")
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
