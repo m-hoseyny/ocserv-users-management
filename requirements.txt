@@ -4,3 +4,4 @@ uWSGI
 requests
 djangorestframework
 drf-yasg
+django-cors-headers==3.7.0
