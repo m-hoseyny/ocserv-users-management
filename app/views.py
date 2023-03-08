@@ -308,3 +308,40 @@ class OnlineUsers(View):
                     output = []
                 return JsonResponse(output, status=200, safe=False)
         return JsonResponse({}, status=400) 
+    
+
+from rest_framework import generics, viewsets, status, filters, permissions, authentication
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .serializer import *
+
+
+class UserManagementView(viewsets.ModelViewSet):
+    queryset = OcservUser.objects.filter().all()
+    serializer_class = OcServUsersSerializer
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+    authentication_classes = [authentication.BasicAuthentication, authentication.TokenAuthentication]
+
+    def create(self, request, *args, **kwargs):
+        username = request.data.get("oc_username")
+        password = request.data.get("oc_password")
+        print(username, password)
+        if OcservUser.objects.filter(oc_username=username).first():
+            return Response(data={'status': 'failed', 'message': 'user with this usernae exists'}, status=500)
+        response = super().create(request, *args, **kwargs)
+        command = f'/usr/bin/echo -e "{password}\n{password}\n"|sudo /usr/bin/ocpasswd -c /etc/ocserv/ocpasswd {username}'
+        print(command)
+        os.system(command)
+        return response
+    
+    def destroy(self, request, *args, **kwargs):
+        user_id = int(kwargs.get('pk'))
+        obj = OcservUser.objects.filter(id=user_id).first()
+        if not obj:
+            return Response(data={'message': 'user has been deleted or does not exist'}, status=404)
+        print(obj)
+        command = f'sudo /usr/bin/ocpasswd  -c /etc/ocserv/ocpasswd -d {obj.oc_username}'
+        print(command)
+        os.system(command)
+        return super().destroy(request, *args, **kwargs)
+

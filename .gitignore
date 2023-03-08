@@ -11,3 +11,4 @@ media/
 TODO.txt
 .vscode
 old/
+static/*

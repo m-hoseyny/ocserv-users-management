@@ -1,9 +1,14 @@
 from django.urls import path
-
+from rest_framework import routers
 from .views import *
 
 app_name = 'app' 
 
+
+# add routers for default viewsets
+
+r = routers.SimpleRouter()
+r.register(r'user', UserManagementView, basename='users')
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
@@ -20,3 +25,4 @@ urlpatterns = [
     path('search_user/', SerchUserHandler.as_view()),     
     path('online_users/', OnlineUsers.as_view()),     
 ]
+urlpatterns += r.urls
