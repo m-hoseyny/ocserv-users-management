@@ -319,7 +319,7 @@ from .serializer import *
 class UserManagementView(viewsets.ModelViewSet):
     queryset = OcservUser.objects.filter().all()
     serializer_class = OcServUsersSerializer
-    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [authentication.BasicAuthentication, authentication.TokenAuthentication]
 
     def create(self, request, *args, **kwargs):
